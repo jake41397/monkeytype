@@ -547,7 +547,8 @@ export function areAllTestWordsGenerated(): boolean {
       CustomText.getLimitMode() === "section" &&
       WordsGenerator.sectionIndex >= CustomText.getLimitValue() &&
       WordsGenerator.currentSection.length === 0 &&
-      CustomText.getLimitValue() !== 0)
+      CustomText.getLimitValue() !== 0) ||
+    (Config.mode === "vocab" && WordsGenerator.currentSection.length === 0)
   );
 }
 

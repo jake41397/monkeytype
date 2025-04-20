@@ -317,7 +317,8 @@ async function handleSpace(): Promise<void> {
     Config.mode === "words" ||
     Config.mode === "custom" ||
     Config.mode === "quote" ||
-    Config.mode === "zen"
+    Config.mode === "zen" ||
+    Config.mode === "vocab"
   ) {
     TimerProgress.update();
   }

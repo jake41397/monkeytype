@@ -93,6 +93,10 @@ function getCurrentCount(): number {
       (TestWords.words.sectionIndexList[TestState.activeWordIndex] as number) -
       1
     );
+  } else if (Config.mode === "vocab") {
+    // In vocab mode, show which word the user is currently typing
+    // This is simply the active word index + 1
+    return TestState.activeWordIndex + 1;
   } else {
     return TestInput.input.getHistory().length;
   }
@@ -137,7 +141,8 @@ export function update(): void {
   } else if (
     Config.mode === "words" ||
     Config.mode === "custom" ||
-    Config.mode === "quote"
+    Config.mode === "quote" ||
+    Config.mode === "vocab"
   ) {
     let outof = TestWords.words.length;
     if (Config.mode === "words") {
@@ -148,6 +153,9 @@ export function update(): void {
     }
     if (Config.mode === "quote") {
       outof = TestWords.currentQuote?.textSplit.length ?? 1;
+    }
+    if (Config.mode === "vocab") {
+      outof = TestWords.words.length;
     }
     if (Config.timerStyle === "bar") {
       const percent = Math.floor(

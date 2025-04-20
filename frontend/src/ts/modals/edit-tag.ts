@@ -49,6 +49,7 @@ const actionModals: Record<Action, SimpleModal> = {
           quote: {},
           zen: {},
           custom: {},
+          vocab: {},
         },
       });
       void Settings.update();

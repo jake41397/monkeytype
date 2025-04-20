@@ -133,6 +133,7 @@ export async function initSnapshot(): Promise<Snapshot | number | boolean> {
       quote: {},
       zen: {},
       custom: {},
+      vocab: {},
     };
 
     for (const mode of ["time", "words", "quote", "zen", "custom"]) {
@@ -679,6 +680,7 @@ export async function saveLocalPB<M extends Mode>(
       quote: {},
       zen: {},
       custom: {},
+      vocab: {},
     };
 
     dbSnapshot.personalBests[mode] ??= {
@@ -757,6 +759,7 @@ export async function getLocalTagPB<M extends Mode>(
     quote: {},
     zen: {},
     custom: {},
+    vocab: {},
   };
 
   filteredtag.personalBests[mode] ??= {
@@ -809,6 +812,7 @@ export async function saveLocalTagPB<M extends Mode>(
       quote: {},
       zen: {},
       custom: {},
+      vocab: {},
     };
 
     filteredtag.personalBests[mode] ??= {
@@ -865,6 +869,7 @@ export async function saveLocalTagPB<M extends Mode>(
         quote: {},
         zen: {},
         custom: {},
+        vocab: {},
       };
       filteredtag.personalBests[mode][mode2] = [
         {

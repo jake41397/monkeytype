@@ -44,5 +44,9 @@ export function isTestTooShort(result: CompletedEvent): boolean {
     return testDuration < 15;
   }
 
+  if (mode === "vocab") {
+    return false;
+  }
+
   return false;
 }

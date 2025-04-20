@@ -914,6 +914,7 @@ list.resetPersonalBests = new SimpleModal({
       quote: {},
       zen: {},
       custom: {},
+      vocab: {},
     };
 
     return {

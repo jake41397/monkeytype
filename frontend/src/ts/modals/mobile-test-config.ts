@@ -56,6 +56,9 @@ function update(): void {
   } else if (Config.mode === "custom") {
     el.find(".punctuation").removeClass("disabled");
     el.find(".numbers").removeClass("disabled");
+  } else if (Config.mode === "vocab") {
+    el.find(".punctuation").addClass("disabled");
+    el.find(".numbers").addClass("disabled");
   }
 }
 

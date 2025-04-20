@@ -56,6 +56,10 @@ export async function instantUpdate(): Promise<void> {
     $("#testConfig .leftSpacer").removeClass("scrolled");
     $("#testConfig .rightSpacer").removeClass("scrolled");
     $("#testConfig .customText").removeClass("hidden");
+  } else if (Config.mode === "vocab") {
+    $("#testConfig .puncAndNum").addClass("hidden");
+    $("#testConfig .leftSpacer").removeClass("scrolled");
+    $("#testConfig .rightSpacer").removeClass("scrolled");
   }
 
   updateExtras("numbers", Config.numbers);
@@ -73,6 +77,7 @@ export async function update(previous: Mode, current: Mode): Promise<void> {
     custom: "customText",
     quote: "quoteLength",
     zen: "zen",
+    vocab: "wordCount",
   };
 
   const animTime = applyReducedMotion(250);
@@ -88,6 +93,7 @@ export async function update(previous: Mode, current: Mode): Promise<void> {
     custom: true,
     quote: false,
     zen: false,
+    vocab: false,
   };
 
   const puncAndNumEl = $("#testConfig .puncAndNum");

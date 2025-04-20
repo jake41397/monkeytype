@@ -45,6 +45,7 @@ import { isDevEnvironment } from "./utils/misc";
 import * as VersionButton from "./elements/version-button";
 import * as Focus from "./test/focus";
 import { getDevOptionsModal } from "./utils/async-modules";
+import * as VocabWords from "./test/vocab-words";
 
 function addToGlobal(items: Record<string, unknown>): void {
   for (const [name, item] of Object.entries(items)) {
@@ -56,6 +57,7 @@ function addToGlobal(items: Record<string, unknown>): void {
 void loadFromLocalStorage();
 void VersionButton.update();
 Focus.set(true, true);
+void VocabWords.init();
 
 addToGlobal({
   snapshot: DB.getSnapshot,

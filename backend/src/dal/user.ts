@@ -88,6 +88,7 @@ export async function addUser(
       quote: {},
       zen: {},
       custom: {},
+      vocab: {},
     },
     testActivity: {},
   };
@@ -118,6 +119,7 @@ export async function resetUser(uid: string): Promise<void> {
           quote: {},
           zen: {},
           custom: {},
+          vocab: {},
         },
         lbPersonalBests: {
           time: {},
@@ -197,6 +199,7 @@ export async function clearPb(uid: string): Promise<void> {
           quote: {},
           zen: {},
           custom: {},
+          vocab: {},
         },
         lbPersonalBests: {
           time: {},
@@ -363,6 +366,7 @@ export async function addTag(uid: string, name: string): Promise<DBUserTag> {
       quote: {},
       zen: {},
       custom: {},
+      vocab: {},
     },
   };
 
@@ -422,6 +426,7 @@ export async function removeTagPb(uid: string, _id: string): Promise<void> {
           quote: {},
           zen: {},
           custom: {},
+          vocab: {},
         },
       },
     },
@@ -466,6 +471,7 @@ export async function checkIfPb(
     quote: {},
     words: {},
     zen: {},
+    vocab: {},
   };
   user.lbPersonalBests ??= {
     time: {},
@@ -524,6 +530,7 @@ export async function checkIfTagPb(
       quote: {},
       zen: {},
       custom: {},
+      vocab: {},
     };
 
     const tagpb = checkAndUpdatePb(tag.personalBests, undefined, result);
@@ -550,6 +557,7 @@ export async function resetPb(uid: string): Promise<void> {
           quote: {},
           zen: {},
           custom: {},
+          vocab: {},
         },
       },
     },

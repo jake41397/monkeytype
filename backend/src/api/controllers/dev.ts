@@ -203,6 +203,7 @@ async function updateUser(uid: string): Promise<void> {
     words: {},
     zen: {},
     quote: {},
+    vocab: {},
   };
   const modes = stats.map(
     (it) =>

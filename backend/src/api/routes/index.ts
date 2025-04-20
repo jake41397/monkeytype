@@ -16,6 +16,7 @@ import configs from "./configs";
 import configuration from "./configuration";
 import { version } from "../../version";
 import leaderboards from "./leaderboards";
+import vocab from "./vocab";
 import addSwaggerMiddlewares from "./swagger";
 import { MonkeyResponse } from "../../utils/monkey-response";
 import {
@@ -44,6 +45,7 @@ const APP_START_TIME = Date.now();
 
 const API_ROUTE_MAP = {
   "/docs": docs,
+  "/vocab": vocab,
 };
 
 const s = initServer();

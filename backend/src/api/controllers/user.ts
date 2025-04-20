@@ -574,6 +574,7 @@ export async function getUser(req: MonkeyRequest): Promise<GetUserResponse> {
     quote: {},
     zen: {},
     custom: {},
+    vocab: {},
   };
 
   const agentLog = buildAgentLog(req);

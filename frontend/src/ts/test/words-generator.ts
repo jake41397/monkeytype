@@ -23,6 +23,7 @@ import {
   isFunboxActiveWithFunction,
 } from "./funbox/list";
 import { WordGenError } from "../utils/word-gen-error";
+import * as VocabWords from "./vocab-words";
 
 function shouldCapitalize(lastChar: string): boolean {
   return /[?!.؟]/.test(lastChar);
@@ -427,6 +428,9 @@ export function getLimit(): number {
     if (Config.mode === "quote") {
       limit = (currentQuote as QuoteWithTextSplit).textSplit.length;
     }
+    if (Config.mode === "vocab") {
+      limit = 10; // Default limit for vocab words
+    }
   }
 
   //infinite words
@@ -444,6 +448,19 @@ export function getLimit(): number {
     } else {
       limit =
         CustomText.getLimitValue() > 100 ? 100 : CustomText.getLimitValue();
+    }
+  }
+
+  // For vocab mode, don't enforce the 100-word limit
+  // Instead use the actual number of words (the vocabulary word and its definition)
+  if (Config.mode === "vocab") {
+    // If we already have vocab words, use their exact length
+    // Otherwise keep the default limit of 10 for initial fetch
+    const vocabWordsList = currentWordset?.words || [];
+    if (vocabWordsList.length > 0) {
+      limit = vocabWordsList.length;
+    } else {
+      limit = 10;
     }
   }
 
@@ -616,6 +633,8 @@ export async function generateWords(
     wordList = await getQuoteWordList(language, wordOrder);
   } else if (Config.mode === "zen") {
     wordList = [];
+  } else if (Config.mode === "vocab") {
+    wordList = await VocabWords.getVocabWords();
   }
 
   const customAndUsingPipeDelimiter =
@@ -645,29 +664,53 @@ export async function generateWords(
 
   let stop = false;
   let i = 0;
-  while (!stop) {
-    const nextWord = await getNextWord(
-      i,
-      limit,
-      Arrays.nthElementFromArray(ret.words, -1) ?? "",
-      Arrays.nthElementFromArray(ret.words, -2) ?? ""
-    );
-    ret.words.push(nextWord.word);
-    ret.sectionIndexes.push(nextWord.sectionIndex);
 
-    if (customAndUsingPipeDelimiter) {
-      //generate a given number of sections, make sure to not cut a section off
-      const sectionFinishedAndOverLimit =
-        currentSection.length === 0 && sectionIndex >= limit;
-      //make sure we dont go over a hard limit, in cases where the sections are very large
-      const upperWordLimit = ret.words.length >= 100;
-      if (sectionFinishedAndOverLimit || upperWordLimit) {
+  // For vocabulary mode, we should use the exact words without repetition
+  if (Config.mode === "vocab") {
+    // Since vocab words come in format "word - definition", we need to split it into individual words
+    // to preserve proper spacing in the typing test
+    for (const vocabularyText of wordList) {
+      // Split the vocabulary text into individual words
+      const individualWords = vocabularyText.split(" ");
+
+      // Add each individual word to the test
+      // eslint-disable-next-line
+      for (const word of individualWords) {
+        if (word) {
+          // Skip empty strings
+          ret.words.push(word);
+          ret.sectionIndexes.push(sectionIndex);
+        }
+      }
+    }
+    // Mark we've used one section
+    sectionIndex++;
+  } else {
+    // Normal word generation logic for other modes
+    while (!stop) {
+      const nextWord = await getNextWord(
+        i,
+        limit,
+        Arrays.nthElementFromArray(ret.words, -1) ?? "",
+        Arrays.nthElementFromArray(ret.words, -2) ?? ""
+      );
+      ret.words.push(nextWord.word);
+      ret.sectionIndexes.push(nextWord.sectionIndex);
+
+      if (customAndUsingPipeDelimiter) {
+        //generate a given number of sections, make sure to not cut a section off
+        const sectionFinishedAndOverLimit =
+          currentSection.length === 0 && sectionIndex >= limit;
+        //make sure we dont go over a hard limit, in cases where the sections are very large
+        const upperWordLimit = ret.words.length >= 100;
+        if (sectionFinishedAndOverLimit || upperWordLimit) {
+          stop = true;
+        }
+      } else if (ret.words.length >= limit) {
         stop = true;
       }
-    } else if (ret.words.length >= limit) {
-      stop = true;
+      i++;
     }
-    i++;
   }
 
   const quote = TestWords.currentQuote;

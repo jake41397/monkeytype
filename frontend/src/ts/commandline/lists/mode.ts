@@ -58,6 +58,15 @@ const commands: Command[] = [
             TestLogic.restart();
           },
         },
+        {
+          id: "changeModeVocab",
+          display: "vocab",
+          configValue: "vocab",
+          exec: (): void => {
+            UpdateConfig.setMode("vocab");
+            TestLogic.restart();
+          },
+        },
       ],
     },
   },

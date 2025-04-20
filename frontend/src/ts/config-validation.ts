@@ -40,3 +40,6 @@ export function isConfigValueValid<T>(
 export function isConfigValueValidBoolean(key: string, val: boolean): boolean {
   return isConfigValueValid(key, val, z.boolean());
 }
+
+// This file has validation for config values to make sure they are valid
+// But let's search for anything related to mode first and make sure it handles vocab

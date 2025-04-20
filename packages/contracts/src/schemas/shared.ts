@@ -36,6 +36,7 @@ export const PersonalBestsSchema = z.object({
   quote: z.record(StringNumberSchema, z.array(PersonalBestSchema)),
   custom: z.record(z.literal("custom"), z.array(PersonalBestSchema)),
   zen: z.record(z.literal("zen"), z.array(PersonalBestSchema)),
+  vocab: z.record(z.literal("vocab"), z.array(PersonalBestSchema)),
 });
 export type PersonalBests = z.infer<typeof PersonalBestsSchema>;
 
@@ -66,7 +67,7 @@ export const QuoteLengthSchema = z.union([
 // // Step 2: Use this schema as the key schema for another object
 // export const ExampleSchema = z.record(SpecificKeySchema, z.string());
 
-// //used by user, config, public
+//used by user, config, public
 export const ModeSchema = PersonalBestsSchema.keyof();
 export type Mode = z.infer<typeof ModeSchema>;
 

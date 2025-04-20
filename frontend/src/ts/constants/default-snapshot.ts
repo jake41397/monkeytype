@@ -98,6 +98,7 @@ const defaultSnap = {
     quote: {},
     zen: {},
     custom: {},
+    vocab: {},
   },
   name: "",
   email: "",
